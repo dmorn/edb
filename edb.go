@@ -140,10 +140,14 @@ func (db *Db) Close() error {
 	return nil
 }
 
+func New(f File) *Db {
+	return &Db{f: f}
+}
+
 func Open(p string) (*Db, error) {
 	f, err := os.OpenFile(p, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return nil, fmt.Errorf("from path: %w", err)
 	}
-	return &Db{f: f}, nil
+	return New(f), nil
 }
